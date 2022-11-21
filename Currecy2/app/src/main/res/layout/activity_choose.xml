@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ChooseActivity">
+
+    <TextView
+        android:id="@+id/fromChoose"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="From currency"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <RadioGroup
+        android:id="@+id/fromG"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fromChoose">
+
+        <RadioButton
+            android:id="@+id/from_cny"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="CNY" />
+
+        <RadioButton
+            android:id="@+id/from_eur"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="EUR" />
+            <RadioButton
+                android:id="@+id/from_jpy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="JPY" />
+            <RadioButton
+                android:id="@+id/from_krw"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="KRW" />
+
+            <RadioButton
+                android:id="@+id/from_usd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="USD" />
+
+            <RadioButton
+                android:id="@+id/from_vnd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="VND" />
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/toChoose"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="To currency"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fromG" />
+
+    <RadioGroup
+        android:id="@+id/toG"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toChoose" >
+            <RadioButton
+                android:id="@+id/to_cny"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="CNY"/>
+
+            <RadioButton
+                android:id="@+id/to_eur"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="EUR" />
+
+            <RadioButton
+                android:id="@+id/to_jpy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="JPY" />
+
+            <RadioButton
+                android:id="@+id/to_krw"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="KWR" />
+
+            <RadioButton
+                android:id="@+id/to_usd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="USD" />
+
+            <RadioButton
+                android:id="@+id/to_vnd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="VND" />
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/choose_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Choose"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toG" />
+</androidx.constraintlayout.widget.ConstraintLayout>

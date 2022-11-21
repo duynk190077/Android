@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/fromText"
+        android:layout_width="0dp"
+        android:layout_height="72dp"
+        android:text="From USD"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/toText"
+        android:layout_width="0dp"
+        android:layout_height="72dp"
+        android:text="To VND"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fromCur" />
+
+    <EditText
+        android:id="@+id/fromCur"
+        android:layout_width="0dp"
+        android:layout_height="59dp"
+        android:ems="10"
+        android:hint="Enter a number"
+        android:inputType="numberDecimal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fromText" />
+
+    <EditText
+        android:id="@+id/toCur"
+        android:layout_width="0dp"
+        android:layout_height="59dp"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        android:hint="Your result"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toText" />
+
+    <Button
+        android:id="@+id/clear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Clear"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toCur" />
+
+    <Button
+        android:id="@+id/convert"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Choose Currency"
+        android:layout_marginRight="20dp"
+        app:layout_constraintEnd_toStartOf="@+id/clear"
+        app:layout_constraintTop_toBottomOf="@+id/toCur" />
+</androidx.constraintlayout.widget.ConstraintLayout>
