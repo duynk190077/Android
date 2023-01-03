@@ -2,30 +2,11 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/abcde"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/fromText"
-        android:layout_width="0dp"
-        android:layout_height="72dp"
-        android:text="From USD"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/toText"
-        android:layout_width="0dp"
-        android:layout_height="72dp"
-        android:text="To VND"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fromCur" />
 
     <EditText
         android:id="@+id/fromCur"
@@ -35,20 +16,21 @@
         android:hint="Enter a number"
         android:inputType="numberDecimal"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fromText" />
+        app:layout_constraintTop_toBottomOf="@+id/spinner_from" />
 
     <EditText
         android:id="@+id/toCur"
         android:layout_width="0dp"
         android:layout_height="59dp"
         android:ems="10"
-        android:inputType="numberDecimal"
         android:hint="Your result"
+        android:inputType="numberDecimal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toText" />
+        app:layout_constraintTop_toBottomOf="@+id/spinner_to" />
 
     <Button
         android:id="@+id/clear"
@@ -58,12 +40,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toCur" />
 
-    <Button
-        android:id="@+id/convert"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Choose Currency"
-        android:layout_marginRight="20dp"
-        app:layout_constraintEnd_toStartOf="@+id/clear"
-        app:layout_constraintTop_toBottomOf="@+id/toCur" />
+    <Spinner
+        android:id="@+id/spinner_from"
+        android:layout_width="0dp"
+        android:layout_height="72dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Spinner
+        android:id="@+id/spinner_to"
+        android:layout_width="0dp"
+        android:layout_height="72dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fromCur" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

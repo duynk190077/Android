@@ -4,12 +4,16 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.HashMap;
@@ -18,9 +22,10 @@ import java.util.Map;
 public class MainActivity extends AppCompatActivity {
 
     EditText fromCur, toCur;
-    TextView fromT, toT;
+    Spinner fromS, toS;
     Map<String, Double> currency = new HashMap<String, Double>();
     String fromText, toText;
+    String[] currencyArr;
     private void buildCurrency() {
         currency.put("CNYCNY", 1.00);
         currency.put("CNYEUR", 0.14);
@@ -65,23 +70,47 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         buildCurrency();
+        currencyArr = getResources().getStringArray(R.array.currecy_array);
         fromCur = findViewById(R.id.fromCur);
         toCur = findViewById(R.id.toCur);
-        fromT = findViewById(R.id.fromText);
-        toT = findViewById(R.id.toText);
+        fromS = findViewById(R.id.spinner_from);
+        toS = findViewById(R.id.spinner_to);
         fromText = "CNY";
         toText = "CNY";
-        fromT.setText("From " + fromText);
-        toT.setText("To " + toText);
 
-        Log.v("FROM", fromCur.getText().toString());
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.currecy_array,
+                android.R.layout.simple_spinner_item);
 
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        findViewById(R.id.convert).setOnClickListener(new View.OnClickListener() {
+        fromS.setAdapter(adapter);
+        toS.setAdapter(adapter);
+
+        fromS.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onClick(View view) {
-                Intent switchToChooseActivity = new Intent(MainActivity.this, ChooseActivity.class);
-                startActivityForResult(switchToChooseActivity, 101);
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+                fromText = currencyArr[position];
+                fromCur.setText("0");
+                toCur.setText("0");
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        toS.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+                toText = currencyArr[position];
+                fromCur.setText("0");
+                toCur.setText("0");
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
             }
         });
 
@@ -124,21 +153,5 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        try {
-            if ((requestCode == 101) && (resultCode == Activity.RESULT_OK)) {
-                Bundle chooseData = data.getExtras();
-                fromText = chooseData.getString("from");
-                toText = chooseData.getString("to");
-                fromT.setText("From " + fromText);
-                toT.setText("To " + toText);
-            }
-        } catch (Exception e) {
-
-        }
     }
 }

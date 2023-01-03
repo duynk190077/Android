@@ -52,6 +52,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    private void formatResult() {
+        double result = Double.parseDouble(curText);
+        int resultInt = (int) result;
+        if (resultInt == result) curText = Integer.toString(resultInt);
+    }
+
     private void removeLast() {
         curText = curText.substring(0, curText.length() - 1);
         if (curText.length() == 0) curText = "0";
@@ -101,6 +107,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
             }
             curText = Double.toString(result);
+            formatResult();
             curOperand = "";
             operator = "";
         } catch (Exception e) {
@@ -148,28 +155,59 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
               break;
           }
           case R.id.button_add: {
-              preOperand = curText;
-              operator =((Button)findViewById(R.id.button_add)).getText().toString();
-              calcText = preOperand + " " + operator + " ";
+              if (operator == "") {
+                  preOperand = curText;
+                  operator =((Button)findViewById(R.id.button_add)).getText().toString();
+                  calcText = preOperand + " " + operator + " ";
+              }
+              else  {
+                  curOperand = curText;
+                  calculation();
+                  operator = ((Button)findViewById(R.id.button_add)).getText().toString();
+                  calcText = curText + " " + operator + " ";
+              }
               break;
           }
           case R.id.button_sub: {
-              preOperand = curText;
-              operator =((Button)findViewById(R.id.button_sub)).getText().toString();
-              calcText = preOperand + " " + operator + " ";
+              if (operator == "") {
+                  preOperand = curText;
+                  operator =((Button)findViewById(R.id.button_sub)).getText().toString();
+                  calcText = preOperand + " " + operator + " ";
+              }
+              else  {
+                  curOperand = curText;
+                  calculation();
+                  operator = ((Button)findViewById(R.id.button_sub)).getText().toString();
+                  calcText = curText + " " + operator + " ";
+              }
               break;
           }
           case R.id.button_multi: {
-              Log.v("MULTI", "onClick: ");
-              preOperand = curText;
-              operator =((Button)findViewById(R.id.button_multi)).getText().toString();
-              calcText = preOperand + " " + operator + " ";
+              if (operator == "") {
+                  preOperand = curText;
+                  operator =((Button)findViewById(R.id.button_multi)).getText().toString();
+                  calcText = preOperand + " " + operator + " ";
+              }
+              else  {
+                  curOperand = curText;
+                  calculation();
+                  operator = ((Button)findViewById(R.id.button_multi)).getText().toString();
+                  calcText = curText + " " + operator + " ";
+              }
               break;
           }
           case R.id.button_div: {
-              preOperand = curText;
-              operator =((Button)findViewById(R.id.button_div)).getText().toString();
-              calcText = preOperand + " " + operator + " ";
+              if (operator == "") {
+                  preOperand = curText;
+                  operator =((Button)findViewById(R.id.button_div)).getText().toString();
+                  calcText = preOperand + " " + operator + " ";
+              }
+              else  {
+                  curOperand = curText;
+                  calculation();
+                  operator = ((Button)findViewById(R.id.button_div)).getText().toString();
+                  calcText = curText + " " + operator + " ";
+              }
               break;
           }
           case R.id.button_result: {
@@ -181,7 +219,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
           }
           default: {
               Log.v("NUMBER", ((Button)findViewById(view.getId())).getText().toString());
-              if (preChar.charAt(0) >= '0' && preChar.charAt(0) <= '9')
+              if ((preChar.charAt(0) >= '0' && preChar.charAt(0) <= '9') || preChar.charAt(0) == '.')
                 curText = curText + ((Button)findViewById(view.getId())).getText().toString();
               else curText = ((Button)findViewById(view.getId())).getText().toString();
               if (preChar.charAt(0) == '=') {

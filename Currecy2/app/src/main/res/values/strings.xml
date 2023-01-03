@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Currecy 2</string>
+    <string-array name="currecy_array">
+        <item>CNY</item>
+        <item>EUR</item>
+        <item>JPY</item>
+        <item>KRW</item>
+        <item>USD</item>
+        <item>VND</item>
+    </string-array>
 </resources>
