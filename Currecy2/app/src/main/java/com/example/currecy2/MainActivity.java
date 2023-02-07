@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.TypedArray;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -16,8 +17,20 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
+
+import javax.net.ssl.HttpsURLConnection;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -25,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
     Spinner fromS, toS;
     Map<String, Double> currency = new HashMap<String, Double>();
     String fromText, toText;
-    String[] currencyArr;
+    List<String> currencyArr;
     private void buildCurrency() {
         currency.put("CNYCNY", 1.00);
         currency.put("CNYEUR", 0.14);
@@ -70,7 +83,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         buildCurrency();
-        currencyArr = getResources().getStringArray(R.array.currecy_array);
+        new GetDataTask().execute();
+        currencyArr = new ArrayList<String>();
         fromCur = findViewById(R.id.fromCur);
         toCur = findViewById(R.id.toCur);
         fromS = findViewById(R.id.spinner_from);
@@ -80,78 +94,117 @@ public class MainActivity extends AppCompatActivity {
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.currecy_array,
                 android.R.layout.simple_spinner_item);
-
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
+//        Log.v("Current", currencyArr.get(0));
         fromS.setAdapter(adapter);
         toS.setAdapter(adapter);
 
-        fromS.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-                fromText = currencyArr[position];
-                fromCur.setText("0");
-                toCur.setText("0");
+//        fromS.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+//                fromText = currencyArr.get(position);
+//                fromCur.setText("0");
+//                toCur.setText("0");
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> adapterView) {
+//
+//            }
+//        });
+//
+//        toS.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+//                toText = currencyArr.get(position);
+//                fromCur.setText("0");
+//                toCur.setText("0");
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> adapterView) {
+//
+//            }
+//        });
+//
+//        findViewById(R.id.clear).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                fromCur.setText("0");
+//                toCur.setText("0");
+//            }
+//        });
+//
+//        fromCur.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//                try {
+//                    if (charSequence.toString() != "") {
+//                        double fromNumber = Double.parseDouble(charSequence.toString());
+//                        double toNumber = fromNumber * currency.get(fromText + toText);
+//                        toCur.setText(String.valueOf(toNumber));
+//                    } else {
+//                        fromCur.setText("0");
+//                        toCur.setText("0");
+//                    }
+//                } catch (Exception e) {
+//                    fromCur.setText("0");
+//                    toCur.setText("0");
+//                }
+//
+//
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable editable) {
+//
+//            }
+//        });
+
+    }
+
+    class GetDataTask extends AsyncTask<Void, Void, String> {
+        @Override
+        protected String doInBackground(Void... voids) {
+            try {
+                URL url = new URL("https://api.apilayer.com/fixer/symbols?apikey=n6UDHXoNTnQx3MV5mrqPR7irjlQlNmpy");
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("GET");
+                BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                String line;
+                String result = "";
+                Log.v("ABC", "abc");
+                while ((line = reader.readLine()) != null)
+                    result += line + "\n";
+                reader.close();
+                Log.v("TAG", result);
+                return result;
+            }catch (Exception ex) {
+                ex.printStackTrace();
             }
+            return null;
+        }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-
-        toS.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-                toText = currencyArr[position];
-                fromCur.setText("0");
-                toCur.setText("0");
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-
-        findViewById(R.id.clear).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                fromCur.setText("0");
-                toCur.setText("0");
-            }
-        });
-
-        fromCur.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                try {
-                    if (charSequence.toString() != "") {
-                        double fromNumber = Double.parseDouble(charSequence.toString());
-                        double toNumber = fromNumber * currency.get(fromText + toText);
-                        toCur.setText(String.valueOf(toNumber));
-                    } else {
-                        fromCur.setText("0");
-                        toCur.setText("0");
+        @Override
+        protected void onPostExecute(String s) {
+            try {
+                Log.v("S", s);
+                if (s != null) {
+                    JSONObject jsonObject = new JSONObject(s);
+                    JSONObject symbol = jsonObject.getJSONObject("symbols");
+                    for (Iterator<String> it = symbol.keys(); it.hasNext(); ) {
+                        String key = it.next();
+                        currencyArr.add(key);
                     }
-                } catch (Exception e) {
-                    fromCur.setText("0");
-                    toCur.setText("0");
                 }
-
-
+            } catch (Exception ex) {
+                ex.printStackTrace();
             }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
-
+        }
     }
 }
